@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <style>
+            input, button { padding: 10px; }
+            .messages {
+                width:350px;
+                height: 500px;
+                border: 1px black solid;
+                border-radius: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <input type="text" id="message" />
+        <button onclick="transmitMessage()">Send</button>
+        <div class="messages">
+
+
+        </div>
+        <script>
+            // Create a new WebSocket.
+            var socket  = new WebSocket('ws://localhost:8080');
+
+            // Define the 
+            var message = document.getElementById('message');
+
+            function transmitMessage() {
+                socket.send( message.value );
+            }
+
+            socket.onmessage = function(e) {
+                // alert( e.data );
+                var messages = document.getElementsByClassName('messages')[0];
+                messages.innerHTML = messages.innerHTML + '<p>' + e.data + '</p>';
+            }
+        </script>
+    </body>
+</html>
